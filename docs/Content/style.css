@@ -26,7 +26,7 @@ html, body {
 #main-zone {
   grid-column: 2 / 3;
   grid-row:    1 / 2;
-  background:  #333; /* fallback */
+  background:  #ffffff; /* fallback */
   display: flex;
   align-items: center;
   justify-content: center;
