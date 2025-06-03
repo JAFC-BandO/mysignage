@@ -5,7 +5,7 @@
   <title>Multi‐Zone Layout with Børneloppen TV & Vejr</title>
   <link rel="stylesheet" href="Content/style.css" />
   <style>
-    /* Using ticker CSS from previous working version with slower ticker animation */
+    /* Using ticker CSS with slower ticker animation */
     html, body {
       margin: 0;
       padding: 0;
@@ -19,7 +19,11 @@
       color: #fff;
       font-family: sans-serif;
     }
-    #weather-zone { grid-column: 1/2; grid-row: 1/3; background: #222; }
+    #weather-zone { 
+      grid-column: 1/2; 
+      grid-row: 1/3; 
+      background: #222; 
+    }
     #main-zone { 
       grid-column: 2/3; 
       grid-row: 1/2; 
@@ -45,20 +49,21 @@
     .ticker-text {
       display: inline-block;
       padding-right: 100%;
-      animation: ticker 120s linear infinite;  /* increased duration from 60s to 120s */
+      animation: ticker 120s linear infinite;
     }
   </style>
 </head>
 <body>
   <!-- Left: Weather “Vejr” (Copenhagen) -->
   <div id="weather-zone">
-    <!-- Removed the api.wo-cloud.com widget and divider -->
-    <!-- Updated left bar content with weather details -->
+    <!-- Removed widget iframe and divider -->
+    <!-- Left bar content with weather details -->
     <div ng-app="app" ng-controller="controller" class="ng-scope">
       <div id="weather-app" style="float:left" layout="row" ng-style="newsSiteStyle" class="layout-row">
         <pr-weather-and-stocks id="pr-weather-app" style="width:440px; height:990px" class="ng-isolate-scope">
           <!-- ngIf: !isMulti -->
-          <div id="left-column" layout="column" ng-style="columnStyle" ng-if="!isMulti" class="ng-scope layout-column" style="background-image: linear-gradient(36deg, rgb(223, 30, 98) 0%, rgb(223, 30, 98) 100%); color: white;">
+          <div id="left-column" layout="column" ng-style="columnStyle" ng-if="!isMulti" class="ng-scope layout-column" 
+               style="background-image: linear-gradient(36deg, rgb(223, 30, 98) 0%, rgb(223, 30, 98) 100%); color: white;">
             <div layout="column" layout-align="start center" class="layout-align-start-center layout-column">
               <div ng-class="enable12HourClock ? 'time-a' : 'time'" class="ng-binding time">21:21</div>
               <div class="date capitalize-first-letter ng-binding">tirsdag d. 03 jun. 2025</div>
@@ -101,13 +106,14 @@
             <div ng-show="stocks.length &gt; 0" aria-hidden="true" class="ng-hide">
               <div class="heading ng-binding">Aktiekurser</div>
               <hr ng-style="hrStyle" style="border-top: 1px solid white; height: 1px;">
-              <!-- ngRepeat: stock in stocks -->
             </div>
             <span flex="" class="flex"></span>
             <div layout="row" layout-align="center center" class="layout-align-center-center layout-row">
-              <img class="logo" ng-src="https://content.evosignage.com/news-page-logo/5f5ba51065134a8c8f095b231b0bb08c.png" src="https://content.evosignage.com/news-page-logo/5f5ba51065134a8c8f095b231b0bb08c.png">
+              <img class="logo" ng-src="https://content.evosignage.com/news-page-logo/5f5ba51065134a8c8f095b231b0bb08c.png" 
+                   src="https://content.evosignage.com/news-page-logo/5f5ba51065134a8c8f095b231b0bb08c.png">
             </div>
-          </div><!-- end ngIf: !isMulti -->
+          </div>
+          <!-- end ngIf: !isMulti -->
           <!-- ngIf: isMulti -->
         </pr-weather-and-stocks>
       </div>
