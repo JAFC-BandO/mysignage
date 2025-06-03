@@ -56,33 +56,12 @@
     </iframe>
   </div>
 
-  <!-- Bottom: Scrolling News Ticker using Angular integration -->
+  <!-- Bottom: Scrolling News Ticker using DR feed -->
   <div id="news-zone">
-    <div class="relative layout-align-center-center layout-row" style="width: 100%; height: 100%" layout="row" layout-align="center center">
-        <videogular vg-auto-play="true" vg-player-ready="onPlayerReady($API)" vg-complete="next()" ng-show="currentItem.itemType === itemTypes.video" class="ng-isolate-scope ng-hide" aria-hidden="true">
-            <vg-media vg-src="currentItem.videoSrc" class="ng-isolate-scope">
-                <video></video>
-            </vg-media>
-        </videogular>
-        <!-- ngIf: currentItem.itemType === itemTypes.website && showWebsite(currentItem) && iframeAllowed -->
-        <iframe ng-if="currentItem.itemType === itemTypes.website && showWebsite(currentItem) && iframeAllowed"
-            ng-src="/display/newsticker?id=6f8ab6dd-eaa7-492e-a341-607c129457bf"
-            class="website ng-scope" scrolling="no" pr-zoom-website=""
-            src="/display/newsticker?id=6f8ab6dd-eaa7-492e-a341-607c129457bf"
-            style="min-width: 150%; min-height: 150%; zoom: 0.666667; transform: scale(0.666667);">
-        </iframe>
-        <!-- end ngIf: currentItem.itemType === itemTypes.website && showWebsite(currentItem) && iframeAllowed -->
-        <div class="view-details layout-row" layout="row">
-            <span class="info ng-binding">News Ticker App: Nyheds-streamer (DR)</span>
-            <span flex="" class="flex"></span>
-            <div class="info">
-                <span class="ng-binding">1 / 1</span>
-                <i class="fa fa-chevron-left pointer item-control-button" ng-click="previous()" role="button" tabindex="0"></i>
-                <i class="fa fa-chevron-right pointer item-control-button" ng-click="next()" role="button" tabindex="0"></i>
-            </div>
-        </div>
-    </div>
+    <div class="ticker-text" id="ticker"></div>
   </div>
+  <!-- New: Load the News Ticker JS -->
+  <script src="Content/ticker.js"></script>
 
   <!-- New: Script to listen for video end event and change screen -->
   <script>
