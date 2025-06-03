@@ -14,22 +14,60 @@
       style="border: none; width: 100%; height: 100%;"
       allowtransparency="true">
     </iframe>
+    <!-- Added sidebar element -->
+    <pr-weather-and-stocks id="pr-weather-app" style="width:440px; height:990px" class="ng-isolate-scope">
+      <!-- ...existing pr-weather-and-stocks content... -->
+      <div id="left-column" layout="column" ng-style="columnStyle" ng-if="!isMulti" class="ng-scope layout-column" style="background-image: linear-gradient(36deg, rgb(223, 30, 98) 0%, rgb(223, 30, 98) 100%); color: white;">
+        <!-- ...existing content from provided snippet... -->
+        <div layout="column" layout-align="start center" class="layout-align-start-center layout-column">
+          <div ng-class="enable12HourClock ? 'time-a' : 'time'" class="ng-binding time">20:13</div>
+          <div class="date capitalize-first-letter ng-binding">tirsdag d. 03 jun. 2025</div>
+        </div>
+        <div class="heading ng-binding">Vejret i dag (Horsens)</div>
+        <hr style="border-top: 1px solid white; height: 1px;">
+        <div layout="row" layout-align="space-between center" class="layout-align-space-between-center layout-row">
+          <i class="pe-5x pe-is-w-mostly-cloudy-2"></i>
+          <div layout="column" layout-align="center end" class="layout-align-center-end layout-column">
+            <div class="current-temperature ng-binding">19°C</div>
+            <div class="current-weather-description capitalize-first-letter ng-binding">skydække</div>
+          </div>
+        </div>
+        <hr style="border-top: 1px solid white; height: 1px;">
+        <!-- Repeated forecast rows … -->
+        <!-- ... -->
+        <div layout="row" layout-align="center center" class="layout-align-center-center layout-row">
+          <img class="logo" src="https://content.evosignage.com/news-page-logo/5f5ba51065134a8c8f095b231b0bb08c.png">
+        </div>
+      </div>
+    </pr-weather-and-stocks>
   </div>
 
-  <!-- Main: Børneloppen TV Embed -->
+  <!-- Main: Børneloppen TV Embed with counters -->
   <div id="main-zone">
     <iframe
-      src="https://www.boerneloppen.dk/tv"
+      src="https://www.boerneloppen.dk/tv?showCounters=true"
       style="border: none; width: 100%; height: 100%;"
-      sandbox="allow‐scripts allow‐same‐origin allow‐popups"
+      sandbox="allow-scripts allow-same-origin allow-popups"
       allowfullscreen>
     </iframe>
   </div>
 
-  <!-- Bottom: Scrolling News Ticker -->
+  <!-- Bottom: Scrolling News Ticker with proper structure -->
   <div id="news-zone">
-    <div class="ticker-text" id="ticker"></div>
+    <div id="ticker">
+      <div id="ticker-text" class="ticker-text"></div>
+    </div>
   </div>
+
+  <!-- New: Script to listen for video end event and change screen -->
+  <script>
+    window.addEventListener("message", function(e) {
+      if(e.data === "videoEnded") {
+        // Change screen when video ends.
+        window.location.reload(); // or redirect as needed
+      }
+    });
+  </script>
 
   <!-- Load the News Ticker JS -->
   <script src="Content/ticker.js" defer></script>
