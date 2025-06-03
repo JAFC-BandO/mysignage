@@ -54,4 +54,5 @@ html, body {
   display:         inline-block;
   padding-right:   100%;
   animation:       ticker 30s linear infinite;
+  will-change:     transform; /* Added for performance improvements */
 }
