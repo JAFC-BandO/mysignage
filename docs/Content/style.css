@@ -1,1 +1,57 @@
+/* Content/style.css */
 
+/* Reset margins/padding and define a fullscreen grid */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 300px 1fr;   /* Left pane fixed 300px, right pane fills */
+  grid-template-rows:    1fr  100px;   /* Top pane fills, bottom is 100px */
+  overflow: hidden;
+  background-color: #000;
+  color: #fff;
+  font-family: sans-serif;
+}
+
+/* Weather zone: left column, spans both rows */
+#weather-zone {
+  grid-column: 1 / 2;
+  grid-row:    1 / 3;
+  background:  #222; /* fallback if iframe doesn't load */
+}
+
+/* Main content zone: top right */
+#main-zone {
+  grid-column: 2 / 3;
+  grid-row:    1 / 2;
+  background:  #333; /* fallback */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* News ticker zone: bottom right */
+#news-zone {
+  grid-column: 2 / 3;
+  grid-row:    2 / 3;
+  background:  #111;
+  overflow:    hidden;
+  white-space: nowrap;
+  font-size:   1.2rem;
+  line-height: 100px;
+  padding-left: 10px;
+}
+
+/* Keyframes for horizontal scrolling */
+@keyframes ticker {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.ticker-text {
+  display:         inline-block;
+  padding-right:   100%;
+  animation:       ticker 30s linear infinite;
+}
