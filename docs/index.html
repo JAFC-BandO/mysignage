@@ -52,11 +52,7 @@
 <body>
   <!-- Left: Weather “Vejr” (Copenhagen) -->
   <div id="weather-zone">
-    <!-- New Weather Widget added at the top -->
-    <iframe src="https://api.wo-cloud.com/content/widget/?geoObjectKey=2301384&language=da&region=DK&timeFormat=HH:mm&windUnit=mps&systemOfMeasurement=metric&temperatureUnit=celsius" 
-      name="CW2" scrolling="no" width="290" height="318" frameborder="0" style="border: 1px solid #FFFFFF; border-radius: 14px">
-    </iframe>
-    <div style="background:#fff; height:2px;"></div>
+    <!-- Removed the api.wo-cloud.com widget and divider -->
     <!-- Updated left bar content with weather details -->
     <div ng-app="app" ng-controller="controller" class="ng-scope">
       <div id="weather-app" style="float:left" layout="row" ng-style="newsSiteStyle" class="layout-row">
