@@ -10,7 +10,7 @@ html, body {
   grid-template-columns: 300px 1fr;   /* Left pane fixed 300px, right pane fills */
   grid-template-rows:    1fr  100px;   /* Top pane fills, bottom is 100px */
   overflow: hidden;
-  background-color: #000;
+  background-color: #ffffff;
   color: #fff;
   font-family: sans-serif;
 }
