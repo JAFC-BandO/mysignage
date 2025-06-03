@@ -5,7 +5,7 @@
   <title>Multi‐Zone Layout with Børneloppen TV & Vejr</title>
   <link rel="stylesheet" href="Content/style.css" />
   <style>
-    /* Using ticker CSS from previous working version */
+    /* Using ticker CSS from previous working version with slower ticker animation */
     html, body {
       margin: 0;
       padding: 0;
@@ -15,12 +15,19 @@
       grid-template-columns: 300px 1fr;
       grid-template-rows: 1fr 100px;
       overflow: hidden;
-      background-color: #000;
+      background-color: #fdfdfd;
       color: #fff;
       font-family: sans-serif;
     }
     #weather-zone { grid-column: 1/2; grid-row: 1/3; background: #222; }
-    #main-zone { grid-column: 2/3; grid-row: 1/2; background: #333; display: flex; align-items: center; justify-content: center; }
+    #main-zone { 
+      grid-column: 2/3; 
+      grid-row: 1/2; 
+      background: #fff; /* changed from #333 to white */
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+    }
     #news-zone {
       grid-column: 2/3;
       grid-row: 2/3;
@@ -38,19 +45,13 @@
     .ticker-text {
       display: inline-block;
       padding-right: 100%;
-      animation: ticker 30s linear infinite;
+      animation: ticker 60s linear infinite;  /* increased to 60s */
     }
   </style>
 </head>
 <body>
   <!-- Left: Weather “Vejr” (Copenhagen) -->
   <div id="weather-zone">
-    <!-- Replaced URL due to DNS issue ("IP-adressen … blev ikke fundet") -->
-    <iframe
-      src="https://via.placeholder.com/300x600?text=Weather+Unavailable"
-      style="border: none; width: 100%; height: 100%;"
-      allowtransparency="true">
-    </iframe>
     <!-- New Weather Widget added at the top -->
     <iframe src="https://api.wo-cloud.com/content/widget/?geoObjectKey=2301384&language=da&region=DK&timeFormat=HH:mm&windUnit=mps&systemOfMeasurement=metric&temperatureUnit=celsius" 
       name="CW2" scrolling="no" width="290" height="318" frameborder="0" style="border: 1px solid #FFFFFF; border-radius: 14px">
