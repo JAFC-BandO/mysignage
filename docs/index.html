@@ -125,17 +125,33 @@
       font-family: "Avenir LT W01_65 Medium";
       font-size: 15px !important;
     }
+
+    /* Override font size for all content in the weather zone */
+    #weather-zone * {
+      font-size: 0.9em !important;
+    }
+  </style>
+  <!-- Override external layout classes (must appear after external CSS) -->
+  <style>
+    html body .layout,
+    html body .layout-column,
+    html body .layout-row {
+      font-size: 0.9em !important;
+    }
   </style>
 </head>
 
 <body ng-controller="controller">
   <!-- WEATHER ZONE (left column) -->
   <div id="weather-zone" ng-if="viewModel.templateId === 3">
-    <iframe
-      src="https://app.proreception.com/display/weather?id=13604c5a-9b02-4244-8569-ab918b4f8630"
-      class="weather-iframe"
-      scrolling="no"
-    ></iframe>
+    <div class="weather-content" style="font-size: 0.9em !important;">
+      <!-- The external weather iframe remains as is -->
+      <iframe
+        src="https://app.proreception.com/display/weather?id=13604c5a-9b02-4244-8569-ab918b4f8630"
+        class="weather-iframe"
+        scrolling="no">
+      </iframe>
+    </div>
   </div>
 
   <!-- MAIN ZONE (top-right) -->
@@ -156,24 +172,5 @@
       scrolling="no"
     ></iframe>
   </div>
-
-  <!-- Override external layout classes -->
-  <style>
-    html body .layout,
-    html body .layout-column,
-    html body .layout-row {
-      font-size: 0.9em !important;
-      /* You can add additional property overrides here if needed */
-    }
-
-        #weather-app #left-column {
-      color: #fff;
-      padding: 40px;
-      width: 100%;
-      height: 100%;
-      font-family: "Avenir LT W01_65 Medium";
-      font-size: 15px !important;
-    }
-  </style>
 </body>
 </html>
