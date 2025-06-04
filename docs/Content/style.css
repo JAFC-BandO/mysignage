@@ -67,6 +67,7 @@ body {
 
   font-family: "Avenir LT W01_65 Medium";
   font-size:   20px;
+  font-size:     70% !important;
 }
 
 /* Weather iframe inside the left column */
