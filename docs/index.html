@@ -3,11 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>Multi‐Zone Layout with Børneloppen TV & Vejr</title>
-
-  <!-- Link to external stylesheet -->
   <link rel="stylesheet" href="Content/style.css" />
 
-  <!-- Inline tweaks specific to this template -->
   <style>
     :root {
       --primary-bg:        #ffffff;
@@ -88,7 +85,7 @@
       transform:         scale(0.67);
     }
 
-    /* PURE-CSS TICKER (fallback, if needed) */
+    /* PURE-CSS TICKER (fallback) */
     @keyframes ticker {
       0%   { transform: translateX(100%); }
       100% { transform: translateX(-100%); }
@@ -116,47 +113,39 @@
 </head>
 
 <body ng-controller="controller">
-  <!-- Only render when templateId === 3 -->
-  <div ng-if="viewModel.templateId === 3" class="template3">
+  <!-- WEATHER ZONE (left) -->
+  <div id="weather-zone" ng-if="viewModel.templateId === 3" class="layout-row layout-align-center-center">
+    <iframe
+      src="https://app.proreception.com/display/weather?id=13604c5a-9b02-4244-8569-ab918b4f8630"
+      class="weather-iframe"
+      scrolling="no"
+    ></iframe>
+  </div>
 
-    <!-- ───────── ROW 1 ───────── -->
-    <div class="layout-row" style="width: 100%; height: 100%;">
+  <!-- MAIN ZONE (top-right) -->
+  <div id="main-zone" ng-if="viewModel.templateId === 3" class="layout-row layout-align-center-center">
+    <iframe
+      src="https://www.boerneloppen.dk/tv?showCounters=true"
+      class="main-iframe"
+      sandbox="allow-scripts allow-same-origin allow-popups"
+      allowfullscreen
+    ></iframe>
+  </div>
 
-      <!-- Weather App (left) -->
-      <div id="weather-zone" class="layout-row layout-align-center-center">
-        <iframe
-          src="https://app.proreception.com/display/weather?id=13604c5a-9b02-4244-8569-ab918b4f8630"
-          class="weather-iframe"
-          scrolling="no"
-        ></iframe>
-      </div>
+  <!-- NEWS TICKER ZONE (bottom-right) -->
+  <div id="news-zone" ng-if="viewModel.templateId === 3" class="layout-row">
+    <iframe
+      src="https://app.evosignage.com/display/newsticker?id=6f8ab6dd-eaa7-492e-a341-607c129457bf"
+      class="news-iframe"
+      scrolling="no"
+    ></iframe>
 
-      <!-- Børneloppen TV (right) -->
-      <div id="main-zone" class="layout-row layout-align-center-center">
-        <iframe
-          src="https://www.boerneloppen.dk/tv?showCounters=true"
-          class="main-iframe"
-          sandbox="allow-scripts allow-same-origin allow-popups"
-          allowfullscreen
-        ></iframe>
-      </div>
+    <!-- Fallback pure‐CSS ticker (uncomment if needed) -->
+    <!--
+    <div class="ticker-placeholder">
+      <span class="ticker-text">Indlæser nyheder fra DR…</span>
     </div>
-
-    <!-- ───────── ROW 2 ───────── -->
-    <div id="news-zone" class="layout-row">
-      <iframe
-        src="https://app.evosignage.com/display/newsticker?id=6f8ab6dd-eaa7-492e-a341-607c129457bf"
-        class="news-iframe"
-        scrolling="no"
-      ></iframe>
-
-      <!-- Fallback pure‐CSS ticker (uncomment if needed) -->
-      <!--
-      <div class="ticker-placeholder">
-        <span class="ticker-text">Indlæser nyheder fra DR…</span>
-      </div>
-      -->
-    </div>
+    -->
   </div>
 </body>
 </html>
