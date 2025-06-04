@@ -64,8 +64,6 @@ body {
   padding:    30px;
   width:      100%;
 
-  /* Force 95% height */
-  height:     95% !important;
 
   font-family: "Avenir LT W01_65 Medium";
   font-size:   20px;
@@ -74,7 +72,8 @@ body {
 /* Weather iframe inside the left column */
 #weather-zone .weather-iframe {
   width:  280px;
-  height: 960px;
+  height: 920px;
+  height:     95% !important;
   border: none;
 }
 
