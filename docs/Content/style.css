@@ -1,0 +1,9 @@
+/* ...existing code... */
+
+.layout, .layout-column, .layout-row {
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    font-size: 0.8em !important;  /* Adjusted font size override */
+}
