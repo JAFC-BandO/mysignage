@@ -1,65 +1,138 @@
 /* Content/style.css */
 
-/* Reset margins/padding and define a fullscreen grid */
+/* ────────────────────────────────────────
+   GLOBAL RESET & GRID SETUP
+   ──────────────────────────────────────── */
+:root {
+  --primary-bg:        #ffffff;
+  --accent-bg:         #f5f5f5;
+  --ticker-bg:         #111;
+  --weather-gradient-start: #dc004e;
+  --weather-gradient-end:   #ad003d;
+  --font-sans:         'Roboto', 'Helvetica Neue', sans-serif;
+  --font-color-light:  #ffffff;
+  --font-color-dark:   rgba(0,0,0,0.87);
+  --shadow-soft:       0 2px 6px rgba(0,0,0,0.15);
+}
+
 html, body {
-  /* New global style properties */
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  color: rgba(0,0,0,0.87);
-  background-color: rgb(250,250,250);
-  height: 100%;
-  min-height: 100%;
-  position: relative;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-text-size-adjust: 100%;
+  margin:            0;
+  padding:           0;
+  width:             100%;
+  height:            100%;
+  font-family:       var(--font-sans);
+  color:             var(--font-color-dark);
+  background-color:  var(--accent-bg);
+  display:           grid;
+  grid-template-columns: 300px 1fr;   /* left pane 300px, right fills */
+  grid-template-rows:    1fr  100px;  /* top fills, bottom 100px */
+  overflow:          hidden;
   -webkit-font-smoothing: antialiased;
-
-  /* Grid layout & other existing properties */
-  display: grid;
-  grid-template-columns: 300px 1fr;   /* Left pane fixed 300px, right pane fills */
-  grid-template-rows:    1fr  100px;   /* Top pane fills, bottom is 100px */
-  overflow: hidden;
+  -webkit-text-size-adjust: 100%;
 }
 
-/* Weather zone: left column, spans both rows */
+/* Remove scrollbars for signage */
+body {
+  overscroll-behavior: none;
+}
+
+/* ────────────────────────────────────────
+   WEATHER ZONE (left)  
+   ──────────────────────────────────────── */
 #weather-zone {
-  grid-column: 1 / 2;
-  grid-row:    1 / 3;
-  background:  #222; /* fallback if iframe doesn't load */
-}
-
-/* Main content zone: top right */
-#main-zone {
-  grid-column: 2 / 3;
-  grid-row:    1 / 2;
-  background:  #ffffff; /* fallback */
-  display: flex;
-  align-items: center;
+  grid-column:   1 / 2;
+  grid-row:      1 / 3;
+  background:    linear-gradient(
+                   150deg,
+                   var(--weather-gradient-start) 0%,
+                   var(--weather-gradient-end)   100%
+                 );
+  box-shadow:    var(--shadow-soft);
+  display:       flex;
+  align-items:   center;
   justify-content: center;
 }
 
-/* News ticker zone: bottom right */
-#news-zone {
-  grid-column: 2 / 3;
-  grid-row:    2 / 3;
-  background:  #111; /* match index.html ticker background */
-  overflow:    hidden;
-  white-space: nowrap;
-  font-size:   1.2rem;
-  line-height: 100px;
-  padding-left: 10px;
+#weather-zone .weather-iframe {
+  width:  280px;
+  height: 960px;
+  border: none;
 }
 
-/* Keyframes for horizontal scrolling */
+/* ────────────────────────────────────────
+   MAIN ZONE (top-right)  
+   ──────────────────────────────────────── */
+#main-zone {
+  grid-column:   2 / 3;
+  grid-row:      1 / 2;
+  background:    var(--primary-bg);
+  box-shadow:    var(--shadow-soft);
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+}
+
+#main-zone .main-iframe {
+  width:  100%;
+  height: 100%;
+  border: none;
+}
+
+/* ────────────────────────────────────────
+   NEWS TICKER ZONE (bottom-right)  
+   ──────────────────────────────────────── */
+#news-zone {
+  grid-column:   2 / 3;
+  grid-row:      2 / 3;
+  background:    var(--ticker-bg);
+  overflow:      hidden;
+  position:      relative;
+}
+
+#news-zone .news-iframe {
+  width:  100%;
+  height: 100%;
+  border: none;
+  /* Scale DR’s ticker down to fit 100px height */
+  transform-origin: top left;
+  transform:         scale(0.67);
+}
+
+/* PURE-CSS TICKER (fallback) */
 @keyframes ticker {
   0%   { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
 }
 
-.ticker-text {
+.ticker-placeholder {
+  position: absolute;
+  top:      0;
+  left:     0;
+  right:    0;
+  bottom:   0;
+  display:  flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.ticker-placeholder .ticker-text {
   display:         inline-block;
   padding-right:   100%;
-  animation:       ticker 30s linear infinite;
-  will-change:     transform; /* Added for performance improvements */
+  animation:       ticker 60s linear infinite;
+  will-change:     transform;
+  font-size:       1.2rem;
+  line-height:     100px;      /* matches the 100px height */
+  color:           var(--font-color-light);
+}
+
+/* OPTIONAL: Style for any <hr> elements if you reintroduce them */
+hr {
+  border:         none;
+  border-top:     1px solid rgba(255,255,255,0.25);
+  margin:         8px 0;
+}
+
+/* Hide any native scrollbars in #news-zone */
+#news-zone::-webkit-scrollbar {
+  display: none;
 }

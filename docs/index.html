@@ -1,168 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 <head>
   <meta charset="UTF-8" />
   <title>Multi‐Zone Layout with Børneloppen TV & Vejr</title>
+
+  <!-- Link to external stylesheet -->
   <link rel="stylesheet" href="Content/style.css" />
+
+  <!-- Inline tweaks specific to this template -->
   <style>
-    /* Using ticker CSS with slower ticker animation */
+    :root {
+      --primary-bg:        #ffffff;
+      --accent-bg:         #f5f5f5;
+      --ticker-bg:         #111;
+      --weather-gradient-start: #dc004e;
+      --weather-gradient-end:   #ad003d;
+      --font-sans:         'Roboto', 'Helvetica Neue', sans-serif;
+      --font-color-light:  #ffffff;
+      --font-color-dark:   rgba(0,0,0,0.87);
+      --shadow-soft:       0 2px 6px rgba(0,0,0,0.15);
+    }
+
     html, body {
-      margin: 0;
-      padding: 0;
-      width: 100vw;
-      height: 100vh;
-      display: grid;
+      margin:    0;
+      padding:   0;
+      width:     100vw;
+      height:    100vh;
+      font-family: var(--font-sans);
+      color: var(--font-color-dark);
+      background-color: var(--accent-bg);
+      display:   grid;
       grid-template-columns: 300px 1fr;
-      grid-template-rows: 1fr 100px;
+      grid-template-rows:    1fr  100px;
       overflow: hidden;
-      background-color: #fdfdfd;
-      color: #fff;
-      font-family: sans-serif;
     }
-    #weather-zone { 
-      grid-column: 1/2; 
-      grid-row: 1/3; 
-      background: #222; 
+
+    /* WEATHER ZONE (left column) */
+    #weather-zone {
+      grid-column:   1 / 2;
+      grid-row:      1 / 3;
+      background:    linear-gradient(
+                       150deg,
+                       var(--weather-gradient-start) 0%,
+                       var(--weather-gradient-end)   100%
+                     );
+      box-shadow:    var(--shadow-soft);
+      display:       flex;
+      align-items:   center;
+      justify-content: center;
     }
-    #main-zone { 
-      grid-column: 2/3; 
-      grid-row: 1/2; 
-      background: #fff; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
+    #weather-zone .weather-iframe {
+      width:  280px;
+      height: 960px;
+      border: none;
     }
+
+    /* MAIN ZONE (top-right) */
+    #main-zone {
+      grid-column:   2 / 3;
+      grid-row:      1 / 2;
+      background:    var(--primary-bg);
+      box-shadow:    var(--shadow-soft);
+      display:       flex;
+      align-items:   center;
+      justify-content: center;
+    }
+    #main-zone .main-iframe {
+      width:  100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* NEWS TICKER ZONE (bottom-right) */
     #news-zone {
-      grid-column: 2/3;
-      grid-row: 2/3;
-      background: #111;
-      overflow: hidden;
-      white-space: nowrap;
-      font-size: 1.2rem;
-      line-height: 100px;
-      padding-left: 10px;
+      grid-column:   2 / 3;
+      grid-row:      2 / 3;
+      background:    var(--ticker-bg);
+      overflow:      hidden;
+      position:      relative;
     }
+    #news-zone .news-iframe {
+      width:  100%;
+      height: 100%;
+      border: none;
+      /* Scale DR ticker down to fit 100px height */
+      transform-origin: top left;
+      transform:         scale(0.67);
+    }
+
+    /* PURE-CSS TICKER (fallback, if needed) */
     @keyframes ticker {
-      0% { transform: translateX(100%); }
+      0%   { transform: translateX(100%); }
       100% { transform: translateX(-100%); }
     }
-    .ticker-text {
-      display: inline-block;
-      padding-right: 100%;
-      animation: ticker 120s linear infinite;
+    .ticker-placeholder {
+      position: absolute;
+      top:      0;
+      left:     0;
+      right:    0;
+      bottom:   0;
+      display:  flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .ticker-placeholder .ticker-text {
+      display:         inline-block;
+      padding-right:   100%;
+      animation:       ticker 60s linear infinite;
+      will-change:     transform;
+      font-size:       1.2rem;
+      line-height:     100px;
+      color:           var(--font-color-light);
     }
   </style>
 </head>
-<body>
-  <!-- Left: Weather “Vejr” (Copenhagen) -->
-  <div id="weather-zone">
-    <!-- Removed widget iframe and divider -->
-    <!-- Left bar content with weather details -->
-    <div ng-app="app" ng-controller="controller" class="ng-scope">
-      <div id="weather-app" style="float:left" layout="row" ng-style="newsSiteStyle" class="layout-row">
-        <pr-weather-and-stocks id="pr-weather-app" style="width:440px; height:990px" class="ng-isolate-scope">
-          <!-- ngIf: !isMulti -->
-          <div id="left-column" layout="column" ng-style="columnStyle" ng-if="!isMulti" class="ng-scope layout-column" 
-               style="background-image: linear-gradient(36deg, rgb(223, 30, 98) 0%, rgb(223, 30, 98) 100%); color: white;">
-            <div layout="column" layout-align="start center" class="layout-align-start-center layout-column">
-              <div ng-class="enable12HourClock ? 'time-a' : 'time'" class="ng-binding time">21:21</div>
-              <div class="date capitalize-first-letter ng-binding">tirsdag d. 03 jun. 2025</div>
-            </div>
-            <div class="heading ng-binding">Vejret i dag (Horsens)</div>
-            <hr ng-style="hrStyle" style="border-top: 1px solid white; height: 1px;">
-            <div layout="row" layout-align="space-between center" class="layout-align-space-between-center layout-row">
-              <i class="pe-5x pe-is-w-mostly-cloudy-2"></i>
-              <div layout="column" layout-align="center end" class="layout-align-center-end layout-column">
-                <div class="current-temperature ng-binding">18°C</div>
-                <div class="current-weather-description capitalize-first-letter ng-binding">skydække</div>
-              </div>
-            </div>
-            <hr ng-style="hrStyle" style="border-top: 1px solid white; height: 1px;">
-            <!-- Repeat forecast rows -->
-            <div ng-repeat="forecast in forecasts" class="ng-scope">
-              <div class="forecast-row layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
-                <span class="forecast-day capitalize-first-letter ng-binding">onsdag</span>
-                <i class="pe-is-w-rain-day pe-3x"></i>
-                <span class="forecast-temperature ng-binding">18°C</span>
-              </div>
-              <hr ng-style="hrStyle" style="border-top: 1px solid white; height: 1px;">
-            </div>
-            <div ng-repeat="forecast in forecasts" class="ng-scope">
-              <div class="forecast-row layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
-                <span class="forecast-day capitalize-first-letter ng-binding">torsdag</span>
-                <i class="pe-is-w-rain-day pe-3x"></i>
-                <span class="forecast-temperature ng-binding">16°C</span>
-              </div>
-              <hr ng-style="hrStyle" style="border-top: 1px solid white; height: 1px;">
-            </div>
-            <div ng-repeat="forecast in forecasts" class="ng-scope">
-              <div class="forecast-row layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
-                <span class="forecast-day capitalize-first-letter ng-binding">fredag</span>
-                <i class="pe-is-w-rain-day pe-3x"></i>
-                <span class="forecast-temperature ng-binding">16°C</span>
-              </div>
-              <hr ng-style="hrStyle" style="border-top: 1px solid white; height: 1px;">
-            </div>
-            <div ng-show="stocks.length &gt; 0" aria-hidden="true" class="ng-hide">
-              <div class="heading ng-binding">Aktiekurser</div>
-              <hr ng-style="hrStyle" style="border-top: 1px solid white; height: 1px;">
-            </div>
-            <span flex="" class="flex"></span>
-            <div layout="row" layout-align="center center" class="layout-align-center-center layout-row">
-              <img class="logo" ng-src="https://content.evosignage.com/news-page-logo/5f5ba51065134a8c8f095b231b0bb08c.png" 
-                   src="https://content.evosignage.com/news-page-logo/5f5ba51065134a8c8f095b231b0bb08c.png">
-            </div>
-          </div>
-          <!-- end ngIf: !isMulti -->
-          <!-- ngIf: isMulti -->
-        </pr-weather-and-stocks>
+
+<body ng-controller="controller">
+  <!-- Only render when templateId === 3 -->
+  <div ng-if="viewModel.templateId === 3" class="template3">
+
+    <!-- ───────── ROW 1 ───────── -->
+    <div class="layout-row" style="width: 100%; height: 100%;">
+
+      <!-- Weather App (left) -->
+      <div id="weather-zone" class="layout-row layout-align-center-center">
+        <iframe
+          src="https://app.proreception.com/display/weather?id=13604c5a-9b02-4244-8569-ab918b4f8630"
+          class="weather-iframe"
+          scrolling="no"
+        ></iframe>
+      </div>
+
+      <!-- Børneloppen TV (right) -->
+      <div id="main-zone" class="layout-row layout-align-center-center">
+        <iframe
+          src="https://www.boerneloppen.dk/tv?showCounters=true"
+          class="main-iframe"
+          sandbox="allow-scripts allow-same-origin allow-popups"
+          allowfullscreen
+        ></iframe>
       </div>
     </div>
-    <!-- End Updated left bar content -->
-  </div>
 
-  <!-- Main: Børneloppen TV Embed with counters -->
-  <div id="main-zone">
-    <iframe
-      src="https://www.boerneloppen.dk/tv?showCounters=true"
-      style="border: none; width: 100%; height: 100%;"
-      sandbox="allow-scripts allow-same-origin allow-popups"
-      allowfullscreen>
-    </iframe>
-  </div>
+    <!-- ───────── ROW 2 ───────── -->
+    <div id="news-zone" class="layout-row">
+      <iframe
+        src="https://app.evosignage.com/display/newsticker?id=6f8ab6dd-eaa7-492e-a341-607c129457bf"
+        class="news-iframe"
+        scrolling="no"
+      ></iframe>
 
-  <!-- Bottom: Scrolling News Ticker (RSS) -->
-  <div id="news-zone">
-    <div class="ticker-text" id="ticker"></div>
+      <!-- Fallback pure‐CSS ticker (uncomment if needed) -->
+      <!--
+      <div class="ticker-placeholder">
+        <span class="ticker-text">Indlæser nyheder fra DR…</span>
+      </div>
+      -->
+    </div>
   </div>
-  <!-- Inline ticker script using BBC feed -->
-  <script>
-    async function loadNewsTicker() {
-      const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
-      const RSS_URL = 'https://feeds.bbci.co.uk/news/world/rss.xml';
-      try {
-        const response = await fetch(CORS_PROXY + encodeURIComponent(RSS_URL));
-        const xmlText = await response.text();
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(xmlText, 'application/xml');
-        const items = Array.from(xml.querySelectorAll('item > title')).slice(0, 10);
-        const headlines = items.map(el => el.textContent);
-        document.getElementById('ticker').textContent = headlines.join('  •  ');
-      } catch (e) {
-        document.getElementById('ticker').textContent = 'Unable to load news feed.';
-        console.error(e);
-      }
-    }
-    loadNewsTicker();
-    setInterval(loadNewsTicker, 600000); // refresh every 10 minutes
-  </script>
-  <!-- New: Script to listen for video end event and change screen -->
-  <script>
-    window.addEventListener("message", function(e) {
-      if (e.data === "videoEnded") {
-        window.location.reload();
-      }
-    });
-  </script>
 </body>
 </html>
