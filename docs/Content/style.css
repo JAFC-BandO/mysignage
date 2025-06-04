@@ -72,8 +72,7 @@ body {
 /* Weather iframe inside the left column */
 #weather-zone .weather-iframe {
   width:  280px;
-  height: 920px;
-  height:     95% !important;
+  height: 950px!important;
   border: none;
 }
 
