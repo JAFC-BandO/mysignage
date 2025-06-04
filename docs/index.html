@@ -36,11 +36,7 @@
     #weather-zone {
       grid-column:   1 / 2;
       grid-row:      1 / 3;
-      background:    linear-gradient(
-                       150deg,
-                       var(--weather-gradient-start) 0%,
-                       var(--weather-gradient-end)   100%
-                     );
+      background:    #d7004c;
       box-shadow:    var(--shadow-soft);
       display:       flex;
       align-items:   center;
@@ -68,9 +64,9 @@
       border: none;
     }
 
-    /* NEWS TICKER ZONE (bottom-right) */
+    /* NEWS TICKER ZONE (full-width bottom) */
     #news-zone {
-      grid-column:   2 / 3;
+      grid-column:   1 / 3;   /* span both columns */
       grid-row:      2 / 3;
       background:    var(--ticker-bg);
       overflow:      hidden;
@@ -106,7 +102,7 @@
       animation:       ticker 60s linear infinite;
       will-change:     transform;
       font-size:       1.2rem;
-      line-height:     100px;
+      line-height:     100px;      /* matches the 100px height */
       color:           var(--font-color-light);
     }
   </style>
@@ -132,7 +128,7 @@
     ></iframe>
   </div>
 
-  <!-- NEWS TICKER ZONE (bottom-right) -->
+  <!-- NEWS TICKER ZONE (full-width bottom) -->
   <div id="news-zone" ng-if="viewModel.templateId === 3">
     <iframe
       src="https://app.evosignage.com/display/newsticker?id=6f8ab6dd-eaa7-492e-a341-607c129457bf"
