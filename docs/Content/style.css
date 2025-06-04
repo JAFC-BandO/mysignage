@@ -58,15 +58,20 @@ body {
   font-size:     70% !important;
 }
 
+/* Ensure inner Angular left-column is 95% tall */
 #weather-app #left-column {
-  color:   #fff;
-  padding: 40px;
-  width:   100%;
+  color:      #fff;
+  padding:    40px;
+  width:      100%;
 
-  /* Ensure this inner column is 95% tall */
-  height:  95% !important;
+  /* Force 95% height */
+  height:     95% !important;
+
+  font-family: "Avenir LT W01_65 Medium";
+  font-size:   20px;
 }
 
+/* Weather iframe inside the left column */
 #weather-zone .weather-iframe {
   width:  280px;
   height: 960px;
@@ -108,7 +113,7 @@ body {
   height: 100%;            /* fill the entire 100px footer */
   border: none;
 
-  /* Scale DR’s 150px-high content down to 100px */
+  /* Scale DR’s 150px-high content down to 100px, no gaps */
   transform-origin: top left;
   transform:         scale(0.67);
 }
