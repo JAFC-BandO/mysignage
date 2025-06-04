@@ -112,9 +112,13 @@
       color:           var(--font-color-light);
     }
 
-    /* Additional rule to scale down text in the left column */
-    #left-column {
-      font-size: 0.7em; /* scales all text inside left-column to 70% of its original size */
+    /* New rule to scale fonts in layout containers */
+    .layout, .layout-column, .layout-row {
+      box-sizing: border-box;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      font-size: 0.7em;
     }
   </style>
 </head>
