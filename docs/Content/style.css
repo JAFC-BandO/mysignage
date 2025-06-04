@@ -72,7 +72,7 @@ body {
 /* Weather iframe inside the left column */
 #weather-zone .weather-iframe {
   width:  280px;
-  height: 950px!important;
+  height: 1065px !important;
   border: none;
 }
 
@@ -107,7 +107,7 @@ body {
 }
 
 #news-zone .news-iframe {
-  width:  100%;
+  width:  200%;
   height: 100%;            /* fill the entire 100px footer */
   border: none;
 
