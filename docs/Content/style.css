@@ -53,6 +53,16 @@ body {
   justify-content: center;
 }
 
+/* Adjust #weather-app #left-column to 95% height */
+#weather-app #left-column {
+  color:      #fff;
+  padding:    40px;
+  width:      100%;
+  /* Previously it was 100%; now set to 95%: */
+  height:     95%;
+}
+
+/* Weather iframe inside the left column */
 #weather-zone .weather-iframe {
   width:  280px;
   height: 960px;
@@ -82,7 +92,7 @@ body {
    NEWS TICKER ZONE (full-width bottom)  
    ──────────────────────────────────────── */
 #news-zone {
-  grid-column:   1 / 3;   /* spans both columns now */
+  grid-column:   1 / 3;   /* spans both columns */
   grid-row:      2 / 3;   /* bottom 100px */
   background:    var(--ticker-bg);
   overflow:      hidden;
@@ -93,7 +103,7 @@ body {
   width:  100%;
   height: 100%;
   border: none;
-  /* Scale DR’s ticker down to fit 100px height */
+  /* Scale DR’s 150px-high ticker down to 100px */
   transform-origin: top left;
   transform:         scale(0.67);
 }
