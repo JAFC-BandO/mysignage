@@ -61,7 +61,7 @@ body {
 /* Ensure inner Angular left-column is 95% tall */
 #weather-app #left-column {
   color:      #fff;
-  padding:    40px;
+  padding:    30px;
   width:      100%;
 
   /* Force 95% height */
