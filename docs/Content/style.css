@@ -55,7 +55,7 @@ body {
   justify-content: center;
 
   /* Shrink text inside to 70% */
-  font-size:     70%;
+  font-size:     70% !important;
 }
 
 #weather-app #left-column {
